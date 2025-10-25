@@ -1,6 +1,7 @@
 services:
   app:
-    build: .
-    volumes:
-      - ./app:/app
+    image: sazanik/docker-compose-app
+    build:
+      context: .
+      dockerfile: Dockerfile.production
     command: make test
