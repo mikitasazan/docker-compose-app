@@ -1,0 +1,25 @@
+services:
+  app:
+    image: sazanik/docker-compose-app
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    env_file:
+      - .env.defaults  # Default values
+      - .env           # Local overrides (optional, ignored by git)
+    depends_on:
+      db:
+        condition: service_healthy
+    command: make test
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

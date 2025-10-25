@@ -1,0 +1,14 @@
+localhost {
+  log {
+    format json
+  }
+
+  # Compression
+  encode zstd
+  # Self-signed certificate
+  tls internal
+
+  # Proxy all requests to app:8080
+  # app is the service name in docker-compose.yml
+  reverse_proxy /* app:8080
+}

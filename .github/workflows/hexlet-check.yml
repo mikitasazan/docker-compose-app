@@ -18,6 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          # Start with defaults
+          cp .env.defaults .env
+          # Override with secrets if they exist
+          [ -n "${{ secrets.DATABASE_HOST }}" ] && echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> .env || true
+          [ -n "${{ secrets.DATABASE_NAME }}" ] && echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env || true
+          [ -n "${{ secrets.DATABASE_USERNAME }}" ] && echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env || true
+          [ -n "${{ secrets.DATABASE_PASSWORD }}" ] && echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env || true
+          [ -n "${{ secrets.DATABASE_PORT }}" ] && echo "DATABASE_PORT=${{ secrets.DATABASE_PORT }}" >> .env || true
+
       - name: Hexlet project check
         uses: hexlet/project-action@release
         with:

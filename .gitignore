@@ -1,0 +1,9 @@
+app/.npm/
+app/node_modules/
+app/dist/
+app/database.sqlite
+app/database.test.sqlite
+
+# Environment variables
+.env
+.env.local
